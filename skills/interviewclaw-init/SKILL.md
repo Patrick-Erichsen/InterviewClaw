@@ -1,6 +1,6 @@
 ---
 name: interviewclaw-init
-description: "Initializes a new InterviewClaw workspace. Creates the folder structure, conducts a discovery interview with the user, writes a CLAUDE.md with the agent's philosophy and pedagogy, and generates a user profile. Run this first before using any other InterviewClaw skills."
+description: "Initializes a new InterviewClaw workspace. Creates the folder structure, opens an onboarding file for the user to fill out, generates structured profile files from their answers, and writes a CLAUDE.md or AGENTS.md with the agent's philosophy and pedagogy. Run this first before using any other InterviewClaw skills."
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, AskUserQuestion
 disable-model-invocation: true
 argument-hint: [path]
@@ -28,8 +28,11 @@ This creates:
 
 ```
 <workspace>/
-├── CLAUDE.md or AGENTS.md  # Written in Step 3
-├── profile.md               # Written in Step 5
+├── CLAUDE.md or AGENTS.md  # Written in Step 4
+├── profile.md               # Written in Step 5 (static background)
+├── goals.md                 # Written in Step 5 (job search intent)
+├── pipeline.md              # Written in Step 5 (active interview tracker)
+├── gaps.md                  # Written in Step 5 (weak spots, evolves over time)
 ├── job-search/
 │   ├── results/
 │   └── seen-jobs.json       # Empty array: []
@@ -41,7 +44,22 @@ This creates:
     └── archive/
 ```
 
-## Step 3: Write the agent config file
+## Step 3: Open onboarding file
+
+Copy the onboarding template to the workspace and open it:
+
+```bash
+cp <skill-dir>/assets/onboarding.md <workspace>/onboarding.md
+open <workspace>/onboarding.md
+```
+
+Tell the user: "I've opened `onboarding.md` in your editor — fill out as much as you can and come back when you're done. Leave anything blank that doesn't apply."
+
+Then ask: "Ready when you are — just let me know once you've filled it out."
+
+After they confirm, read `<workspace>/onboarding.md`. If they included a path to a resume file, read that too.
+
+## Step 4: Write the agent config file
 
 If you are Claude, write to `<workspace>/CLAUDE.md`. Otherwise, write to `<workspace>/AGENTS.md`. This is the core document that governs how the agent behaves in this workspace.
 
@@ -86,31 +104,29 @@ You are a demanding but supportive interview coach, not a tutor who gives answer
    - [GreatFrontend](https://www.greatfrontend.com) for frontend-specific prep
    - [NeetCode](https://neetcode.io) for structured problem roadmaps
 
-6. **Adapt to the user.** Read `profile.md` to understand their background. A senior engineer prepping for staff-level system design rounds needs a different approach than a junior engineer working on fundamentals.
+6. **Adapt to the user.** Read the profile files below to understand their background. A senior engineer prepping for staff-level system design rounds needs a different approach than a junior engineer working on fundamentals.
 
 7. **Track patterns across sessions.** When writing reviews, note recurring weaknesses. If the user struggles with dynamic programming in three consecutive problems, call that out explicitly and recommend a focused study plan.
 
 ## User profile
 
-See `profile.md` for details on the user's background, target roles, and interview goals. Update this file when you learn new information about the user.
+At the start of every session, read these files for user context:
+
+- `profile.md` — Background, experience level, tech stack
+- `goals.md` — Target roles, company preferences, job search intent
+- `pipeline.md` — Active interviews, stages, and deadlines
+- `gaps.md` — Technical weak spots (starts as self-assessment, refined over time)
+
+**Keep these files updated:**
+- Update `pipeline.md` when interview stages change or new companies are added
+- Update `gaps.md` when recurring weaknesses emerge across practice sessions
 ```
 
-## Step 4: Conduct discovery interview
+## Step 5: Generate profile files
 
-Have a conversational interview with the user. Be natural, not robotic. Cover:
+Using the content from `onboarding.md` (and resume if provided), write four files:
 
-1. **Background** — What's your current role? How many years of experience? What's your strongest technical area?
-2. **Job search goals** — What kind of roles are you targeting? (level, company size, remote/hybrid/onsite, industry)
-3. **Technical stack** — What languages and frameworks do you work with day-to-day?
-4. **Interview status** — Are you actively interviewing? At which companies? What stage?
-5. **Weak spots** — What topics do you find hardest? Where have you struggled in past interviews?
-6. **Prep goals** — What do you most want to get out of this? (e.g., "I always choke on system design" or "I need to grind algorithms")
-
-If the user has a resume, ask for the file path, read it, and use it to pre-fill what you can. Then confirm and fill gaps.
-
-## Step 5: Write profile.md
-
-Write everything you learned to `<workspace>/profile.md`:
+### `<workspace>/profile.md`
 
 ```markdown
 # Profile
@@ -120,30 +136,60 @@ Write everything you learned to `<workspace>/profile.md`:
 - Years of experience
 - Strongest technical areas
 
+## Technical Stack
+- Primary languages
+- Frameworks and tools
+- Areas of depth vs. familiarity
+```
+
+### `<workspace>/goals.md`
+
+```markdown
+# Goals
+
 ## Target Roles
 - Role level and titles
 - Company preferences (size, industry, culture)
 - Location preferences
 - Compensation expectations (if shared)
 
-## Technical Stack
-- Primary languages
-- Frameworks and tools
-- Areas of depth vs. familiarity
+## Job Search Intent
+- Sample job postings or target companies
+- Timeline (unlimited prep time vs. specific deadline)
+```
 
-## Interview Status
-- Currently interviewing at: (list companies and stages)
-- Timeline or urgency
+### `<workspace>/pipeline.md`
 
-## Areas to Improve
-- Self-identified weak spots
-- Past interview failures and what went wrong
+```markdown
+# Interview Pipeline
+
+| Company | Stage | Next date | Notes |
+|---------|-------|-----------|-------|
+```
+
+If the user is actively interviewing, populate the table with what they shared. If not, leave it as an empty table.
+
+### `<workspace>/gaps.md`
+
+```markdown
+# Gaps & Focus Areas
+
+## Self-Assessed Weak Spots
+- Topics the user identified as hard
 
 ## Prep Goals
 - What the user most wants to focus on
 
-## Notes
-- Anything else relevant that came up in the conversation
+## Patterns (updated over time)
+_Filled in as practice reviews reveal recurring weaknesses._
+```
+
+### Clean up
+
+After writing all four files, delete the temporary intake file:
+
+```bash
+rm <workspace>/onboarding.md
 ```
 
 ## Step 6: Confirm setup

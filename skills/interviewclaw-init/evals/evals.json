@@ -4,7 +4,7 @@
     {
       "id": 1,
       "prompt": "Set up my InterviewClaw workspace at the path I'll give you. Here's everything about me: I'm a senior backend engineer with 7 years of experience, mostly Go and Postgres. I'm targeting staff/senior engineer roles at mid-size fintech companies (Series B–D), fully remote. I'm actively interviewing at Stripe (final round next week) and Plaid (just got a phone screen). My weak spots are system design — I always freeze when asked to design something at scale — and I consistently underestimate time complexity. I want to focus on system design practice and high-frequency LeetCode patterns. No resume file to share. Workspace path: $WORKSPACE_PATH",
-      "expected_output": "A fully initialized workspace with the correct folder structure, a profile.md capturing all stated details (role, stack, targets, weak spots, interview status), and a CLAUDE.md or AGENTS.md with the pedagogical philosophy.",
+      "expected_output": "A fully initialized workspace with the correct folder structure. profile.md captures background and stack. goals.md captures targets and remote preference. pipeline.md has Stripe and Plaid as active interviews. gaps.md captures system design weakness. CLAUDE.md or AGENTS.md written with pedagogical philosophy and references to all four profile files. onboarding.md deleted.",
       "files": [],
       "assertions": [
         "job-search/ exists as a directory",
@@ -18,17 +18,20 @@
         "job-search/seen-jobs.json exists and contains an empty JSON array",
         "CLAUDE.md or AGENTS.md exists at the workspace root",
         "Config file contains pedagogical principles (coaching philosophy)",
-        "profile.md mentions Stripe under interview status",
-        "profile.md mentions Plaid under interview status",
-        "profile.md mentions Go and Postgres in technical stack",
-        "profile.md mentions system design as a weak spot",
+        "Config file references profile.md, goals.md, pipeline.md, and gaps.md",
+        "profile.md exists and mentions Go and Postgres",
+        "goals.md exists and mentions fintech or remote",
+        "pipeline.md exists and mentions Stripe",
+        "pipeline.md mentions Plaid",
+        "gaps.md exists and mentions system design as a weak spot",
+        "onboarding.md does not exist at the workspace root",
         "Next-step suggestion recommends company prep for Stripe (highest urgency)"
       ]
     },
     {
       "id": 2,
       "prompt": "Initialize an InterviewClaw workspace for me at $WORKSPACE_PATH. I'm a junior engineer, about 1.5 years of experience out of a bootcamp. I work in React and Node.js. I'm not actively interviewing yet — I want to build a solid foundation before I start applying. I'm weakest on data structures and algorithms, especially trees and graphs. I want a structured study plan more than anything. No resume.",
-      "expected_output": "Workspace initialized with correct folder structure. profile.md reflects junior level, React/Node stack, no active interviews, DS&A focus. Config file written with coaching philosophy.",
+      "expected_output": "Workspace initialized with correct folder structure. profile.md reflects junior level and React/Node stack. goals.md reflects no active targeting yet. pipeline.md has an empty table. gaps.md captures DS&A weakness. Config file written with coaching philosophy.",
       "files": [],
       "assertions": [
         "job-search/ exists as a directory",
@@ -42,17 +45,19 @@
         "job-search/seen-jobs.json exists and contains an empty JSON array",
         "CLAUDE.md or AGENTS.md exists at the workspace root",
         "Config file contains pedagogical principles (coaching philosophy)",
-        "profile.md mentions React and Node.js",
+        "Config file references profile.md, goals.md, pipeline.md, and gaps.md",
+        "profile.md exists and mentions React and Node.js",
         "profile.md reflects junior or early-career level",
-        "profile.md mentions trees or graphs as weak areas",
-        "profile.md indicates not actively interviewing",
+        "gaps.md exists and mentions trees or graphs as weak areas",
+        "pipeline.md exists and contains an empty table (no active interviews)",
+        "onboarding.md does not exist at the workspace root",
         "Next-step suggestion recommends roadmap or study plan (not job search)"
       ]
     },
     {
       "id": 3,
       "prompt": "Hey can you set up InterviewClaw for me at $WORKSPACE_PATH? I'm a frontend engineer, 4 years exp, mostly TypeScript and React, some Next.js. I'm targeting senior FE roles — open to big tech or well-funded startups. I have a final round at Figma in 8 days and I'm freaking out a bit. My weak area is front-end system design (component architecture, state management at scale) and I've never done a live coding interview before. Want to focus hard on Figma prep first.",
-      "expected_output": "Workspace initialized. profile.md captures urgency (Figma final round in 8 days), FE stack, weak areas. Config file written. Suggested next step should be company prep for Figma, not job search.",
+      "expected_output": "Workspace initialized. profile.md captures FE stack. goals.md captures senior FE target roles. pipeline.md has Figma final round with urgency (8 days). gaps.md captures FE system design weakness. Config file written. Suggested next step should be company prep for Figma.",
       "files": [],
       "assertions": [
         "job-search/ exists as a directory",
@@ -66,9 +71,12 @@
         "job-search/seen-jobs.json exists and contains an empty JSON array",
         "CLAUDE.md or AGENTS.md exists at the workspace root",
         "Config file contains pedagogical principles (coaching philosophy)",
-        "profile.md mentions Figma",
-        "profile.md mentions TypeScript or React",
-        "profile.md mentions front-end system design as a weak area",
+        "Config file references profile.md, goals.md, pipeline.md, and gaps.md",
+        "profile.md exists and mentions TypeScript or React",
+        "goals.md exists and mentions senior frontend roles",
+        "pipeline.md exists and mentions Figma",
+        "gaps.md exists and mentions front-end system design as a weak area",
+        "onboarding.md does not exist at the workspace root",
         "Next-step suggestion recommends company prep for Figma"
       ]
     }
